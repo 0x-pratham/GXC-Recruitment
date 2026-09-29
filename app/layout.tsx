@@ -6,6 +6,7 @@ import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { SmoothScroll } from "@/components/motion/SmoothScroll";
+import { WelcomePopup } from "@/components/ui/WelcomePopup";
 
 const sansFont = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -127,6 +128,8 @@ export default function RootLayout({
             <Footer />
           </div>
         </SmoothScroll>
+
+        <WelcomePopup />
       </body>
     </html>
   );
