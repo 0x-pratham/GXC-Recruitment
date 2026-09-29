@@ -12,10 +12,10 @@ export default function SuccessPage() {
   const shouldReduceMotion = useReducedMotion();
 
   return (
-    <Section className="flex min-h-[calc(100vh-64px)] items-center bg-gx-surface py-24 sm:py-32">
+    <Section className="flex min-h-[calc(100vh-64px)] items-center bg-gx-surface py-20 sm:py-24">
       <Container>
         <div className="mx-auto flex max-w-4xl flex-col items-center text-center">
-          {/* Small visual acknowledgement */}
+          {/* Visual acknowledgement */}
           <motion.div
             initial={
               shouldReduceMotion
@@ -93,7 +93,6 @@ export default function SuccessPage() {
             the work you shared with us.
           </motion.p>
 
-          {/* Response expectation */}
           <motion.p
             initial={
               shouldReduceMotion
@@ -105,17 +104,12 @@ export default function SuccessPage() {
               duration: 0.6,
               delay: shouldReduceMotion ? 0 : 0.32,
             }}
-            className="
-              mt-4
-              text-sm
-              text-gx-ink/45
-              sm:text-base
-            "
+            className="mt-4 text-sm text-gx-ink/45 sm:text-base"
           >
             We typically get back to applicants within 48 hours.
           </motion.p>
 
-          {/* Action */}
+          {/* WhatsApp follow-up */}
           <motion.div
             initial={
               shouldReduceMotion
@@ -125,10 +119,69 @@ export default function SuccessPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{
               duration: 0.65,
-              delay: shouldReduceMotion ? 0 : 0.4,
+              delay: shouldReduceMotion ? 0 : 0.42,
               ease: [0.22, 1, 0.36, 1],
             }}
-            className="mt-10 sm:mt-12"
+            className="mt-10 flex flex-col items-center sm:mt-12"
+          >
+            <p className="text-base font-medium text-gx-ink">
+              Stay tuned with GenXCode.
+            </p>
+
+            <p className="mt-2 max-w-md text-sm leading-6 text-gx-ink/55">
+              Join our WhatsApp Channel for recruitment updates,
+              announcements and what&apos;s happening next.
+            </p>
+
+            <a
+              href="https://whatsapp.com/channel/0029VbDWVfRIN9ien14MPB1t"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="
+                mt-5
+                inline-flex
+                min-h-11
+                items-center
+                justify-center
+                rounded-gx-md
+                bg-[#25D366]
+                px-6
+                text-sm
+                font-medium
+                text-white
+                transition-all
+                duration-300
+                hover:-translate-y-0.5
+                hover:bg-[#20bd5a]
+                focus-visible:outline-none
+                focus-visible:ring-2
+                focus-visible:ring-[#25D366]
+                focus-visible:ring-offset-2
+              "
+            >
+              Join WhatsApp Channel
+              <span
+                aria-hidden="true"
+                className="ml-2 transition-transform duration-300 group-hover:translate-x-1"
+              >
+                →
+              </span>
+            </a>
+          </motion.div>
+
+          {/* Back to recruitment */}
+          <motion.div
+            initial={
+              shouldReduceMotion
+                ? { opacity: 1 }
+                : { opacity: 0 }
+            }
+            animate={{ opacity: 1 }}
+            transition={{
+              duration: 0.6,
+              delay: shouldReduceMotion ? 0 : 0.55,
+            }}
+            className="mt-7"
           >
             <LinkButton
               href="/recruitment"
