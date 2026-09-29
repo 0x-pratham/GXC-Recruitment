@@ -1,26 +1,245 @@
+/* =========================================================
+   GenXCode Recruitment
+   app/globals.css
+   ========================================================= */
+
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* =========================================================
+   DESIGN TOKENS
+   ========================================================= */
+
+@theme {
+  /* -------------------------------------------------------
+     Brand Colors
+     ------------------------------------------------------- */
+
+  --color-gx-lavender: #e1d0fd;
+  --color-gx-ink: #220849;
+  --color-gx-purple: #602795;
+
+  /* -------------------------------------------------------
+     UI Colors
+     ------------------------------------------------------- */
+
+  --color-gx-background: #ffffff;
+  --color-gx-surface: #faf8ff;
+  --color-gx-border: rgba(34, 8, 73, 0.12);
+
+  /* -------------------------------------------------------
+     Border Radius
+     ------------------------------------------------------- */
+
+  --radius-gx-sm: 8px;
+  --radius-gx-md: 14px;
+  --radius-gx-lg: 24px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+/* =========================================================
+   BASE
+   ========================================================= */
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  html {
+    background-color: var(--color-gx-background);
+
+    /*
+     * Prevent horizontal overflow caused by animated elements,
+     * large typography or off-canvas mobile navigation.
+     */
+    overflow-x: hidden;
+
+    /*
+     * Gives native browser anchor navigation a smoother feel.
+     * JS smooth-scroll libraries can still override this when
+     * required.
+     */
+    scroll-behavior: smooth;
+
+    /*
+     * Prevents accidental text resizing on mobile browsers.
+     */
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
   }
-}
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  body {
+    background-color: var(--color-gx-background);
+    color: var(--color-gx-ink);
+
+    /*
+     * Google Sans Flex is loaded through next/font and exposed
+     * through --font-google-sans-flex in the root layout.
+     */
+    font-family: var(--font-google-sans-flex), system-ui, sans-serif;
+
+    /*
+     * Typography rendering.
+     */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    /*
+     * Prevents the native pull-to-refresh / overscroll
+     * behavior on mobile.
+     */
+    overscroll-behavior-y: none;
+
+    /*
+     * Optimizes tap interactions on touch devices.
+     * Individual interactive components can override this
+     * when they require native gesture behavior.
+     */
+    touch-action: manipulation;
+
+    /*
+     * Prevents accidental horizontal scrolling at the document
+     * level while allowing vertical page scrolling.
+     */
+    overflow-x: hidden;
+
+    /*
+     * Better default rendering for modern browsers.
+     */
+    text-rendering: optimizeLegibility;
+  }
+
+  /* =======================================================
+     HEADINGS
+     ======================================================= */
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    /*
+     * GenXCode editorial / luxury heading typography.
+     */
+    font-family: "Times New Roman", Times, serif;
+
+    color: var(--color-gx-ink);
+
+    /*
+     * Prevent browser defaults from introducing inconsistent
+     * spacing between custom sections.
+     */
+    margin: 0;
+
+    /*
+     * Better heading rendering.
+     */
+    font-weight: 400;
+    text-wrap: balance;
+  }
+
+  /* =======================================================
+     BODY TEXT
+     ======================================================= */
+
+  p {
+    margin: 0;
+    text-wrap: pretty;
+  }
+
+  /* =======================================================
+     LINKS
+     * ======================================================= */
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  /* =======================================================
+     BUTTONS / FORM CONTROLS
+     * ======================================================= */
+
+  button,
+  input,
+  textarea,
+  select {
+    font: inherit;
+  }
+
+  button {
+    /*
+     * Prevents the browser's default button appearance from
+     * interfering with our design-system components.
+     */
+    cursor: pointer;
+  }
+
+  /*
+   * Disabled controls should communicate their state without
+   * requiring every component to redefine these properties.
+   */
+  button:disabled,
+  input:disabled,
+  textarea:disabled,
+  select:disabled {
+    cursor: not-allowed;
+  }
+
+  /* =======================================================
+     IMAGES / MEDIA
+     * ======================================================= */
+
+  img,
+  svg,
+  video,
+  canvas {
+    display: block;
+    max-width: 100%;
+  }
+
+  img {
+    /*
+     * Prevents inline-image baseline gaps.
+     */
+    height: auto;
+  }
+
+  /* =======================================================
+     FOCUS ACCESSIBILITY
+     * ======================================================= */
+
+  :focus-visible {
+    outline: 2px solid var(--color-gx-purple);
+    outline-offset: 3px;
+  }
+
+  /* =======================================================
+     SELECTION
+     * ======================================================= */
+
+  ::selection {
+    background-color: var(--color-gx-lavender);
+    color: var(--color-gx-ink);
+  }
+
+  /* =======================================================
+     REDUCED MOTION
+     * ======================================================= */
+
+  /*
+   * Respects users who have requested reduced motion at OS
+   * level. GSAP / Framer Motion components should additionally
+   * use their respective reduced-motion APIs.
+   */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
 }
