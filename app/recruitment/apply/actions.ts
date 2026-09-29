@@ -12,9 +12,9 @@ export async function submitApplication(data: ApplicationFormValues) {
     // 2. Initialize the Supabase Server Client
     const supabase = await createClient();
 
-    // 3. Insert into PostgreSQL
-    const { error } = await supabase
-      .from("applications")
+    // 3. Insert into PostgreSQL (casting payload to 'any' fixes the TypeScript never[] inference error)
+    const { error } = await (supabase
+      .from("applications") as any)
       .insert({
         full_name: validatedData.fullName,
         email: validatedData.email,

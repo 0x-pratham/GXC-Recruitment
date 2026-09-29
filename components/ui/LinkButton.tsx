@@ -3,7 +3,8 @@ import * as React from "react";
 import Link, { LinkProps } from "next/link";
 import { cn } from "@/lib/utils";
 
-interface LinkButtonProps extends LinkProps, React.AnchorHTMLAttributes<HTMLAnchorElement> {
+// Omit 'href' from anchor attributes to resolve the simultaneous extension conflict with Next.js LinkProps
+export interface LinkButtonProps extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, "href">, LinkProps {
   variant?: "primary" | "secondary" | "outline";
   size?: "sm" | "md" | "lg";
 }

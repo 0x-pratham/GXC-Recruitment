@@ -6,7 +6,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion, Variants } from "framer-motion";
 
 import {
   applicationSchema,
@@ -39,7 +39,6 @@ export function RecruitmentForm() {
     setServerError(null);
 
     try {
-      // Call the Next.js Server Action.
       const result = await submitApplication(data);
 
       if (!result.success) {
@@ -50,7 +49,6 @@ export function RecruitmentForm() {
         return;
       }
 
-      // Redirect to the confirmation route.
       router.push("/recruitment/apply/success");
     } catch {
       setServerError(
@@ -60,7 +58,8 @@ export function RecruitmentForm() {
     }
   };
 
-  const fieldMotion = {
+  // Explicitly typed as Variants to fix the ease array TypeScript error
+  const fieldMotion: Variants = {
     hidden: {
       opacity: 0,
       y: shouldReduceMotion ? 0 : 18,

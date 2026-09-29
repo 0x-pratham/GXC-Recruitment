@@ -1,3 +1,4 @@
+// app/_components/HomePrinciples.tsx
 "use client";
 
 import { useEffect, useRef } from "react";
@@ -37,22 +38,15 @@ export function HomePrinciples() {
     if (!container) return;
 
     const ctx = gsap.context(() => {
-      /*
-       * Respect users who prefer reduced motion.
-       * The content remains fully visible without animation.
-       */
       const prefersReducedMotion = window.matchMedia(
         "(prefers-reduced-motion: reduce)",
       ).matches;
 
       if (prefersReducedMotion) {
+        gsap.set([".principle", ".principle-title", ".principle-description"], { opacity: 1, y: 0 });
         return;
       }
 
-      /*
-       * Animate each principle independently as it enters
-       * the viewport.
-       */
       const principles =
         gsap.utils.toArray<HTMLElement>(".principle");
 
@@ -124,100 +118,103 @@ export function HomePrinciples() {
   }, []);
 
   return (
-    <Section
-      ref={containerRef}
-      className="bg-gx-surface py-24 sm:py-32 md:py-40 lg:py-48"
-    >
-      <Container>
-        {/* =====================================================
-            SECTION HEADING
-            ===================================================== */}
+    <Section className="bg-gx-surface py-24 sm:py-32 md:py-40 lg:py-48">
+      {/* Ref moved to a native div to fix the TypeScript error */}
+      <div ref={containerRef} className="w-full">
+        <Container>
+          {/* =====================================================
+              SECTION HEADING
+              ===================================================== */}
 
-        <div className="mb-20 max-w-3xl sm:mb-24 md:mb-32">
-          <h2
-            className="
-              font-serif
-              text-5xl
-              font-normal
-              leading-[0.95]
-              tracking-[-0.04em]
-              text-gx-ink
-              sm:text-6xl
-              md:text-7xl
-            "
-          >
-            How we think.
-          </h2>
-        </div>
-
-        {/* =====================================================
-            PRINCIPLES
-            ===================================================== */}
-
-        <div className="flex flex-col gap-20 sm:gap-28 md:gap-36 lg:gap-44">
-          {PRINCIPLES.map((principle) => (
-            <article
-              key={principle.title}
+          <div className="mb-20 max-w-3xl sm:mb-24 md:mb-32">
+            <h2
               className="
-                principle
-                grid
-                gap-7
-
-                md:grid-cols-[0.9fr_1.1fr]
-                md:items-end
-                md:gap-16
-
-                lg:grid-cols-2
-                lg:gap-24
+                font-serif
+                text-5xl
+                font-normal
+                leading-[0.95]
+                tracking-[-0.04em]
+                text-gx-ink
+                sm:text-6xl
+                md:text-7xl
               "
             >
-              {/* -------------------------------------------------
-                  TITLE
-                  ------------------------------------------------- */}
+              How we think.
+            </h2>
+          </div>
 
-              <div>
-                <h3
-                  className="
-                    principle-title
-                    font-serif
-                    text-5xl
-                    font-normal
-                    leading-[0.9]
-                    tracking-[-0.04em]
-                    text-gx-ink
+          {/* =====================================================
+              PRINCIPLES
+              ===================================================== */}
 
-                    sm:text-6xl
-                    md:text-7xl
-                    lg:text-[6.5rem]
-                  "
-                >
-                  {principle.title}
-                </h3>
-              </div>
+          <div className="flex flex-col gap-20 sm:gap-28 md:gap-36 lg:gap-44">
+            {PRINCIPLES.map((principle) => (
+              <article
+                key={principle.title}
+                className="
+                  principle
+                  opacity-0
+                  grid
+                  gap-7
 
-              {/* -------------------------------------------------
-                  DESCRIPTION
-                  ------------------------------------------------- */}
+                  md:grid-cols-[0.9fr_1.1fr]
+                  md:items-end
+                  md:gap-16
 
-              <div className="max-w-xl">
-                <p
-                  className="
-                    principle-description
-                    text-lg
-                    leading-8
-                    text-gx-ink/65
+                  lg:grid-cols-2
+                  lg:gap-24
+                "
+              >
+                {/* -------------------------------------------------
+                    TITLE
+                    ------------------------------------------------- */}
 
-                    sm:text-xl
-                    sm:leading-9
-                  "
-                >
-                  {principle.description}
-                </p>
-              </div>
-            </article>
-          ))}
-        </div>
-      </Container>
+                <div>
+                  <h3
+                    className="
+                      principle-title
+                      opacity-0
+                      font-serif
+                      text-5xl
+                      font-normal
+                      leading-[0.9]
+                      tracking-[-0.04em]
+                      text-gx-ink
+
+                      sm:text-6xl
+                      md:text-7xl
+                      lg:text-[6.5rem]
+                    "
+                  >
+                    {principle.title}
+                  </h3>
+                </div>
+
+                {/* -------------------------------------------------
+                    DESCRIPTION
+                    ------------------------------------------------- */}
+
+                <div className="max-w-xl">
+                  <p
+                    className="
+                      principle-description
+                      opacity-0
+                      text-lg
+                      leading-8
+                      text-gx-ink/65
+
+                      sm:text-xl
+                      sm:leading-9
+                    "
+                  >
+                    {principle.description}
+                  </p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </Container>
+      </div>
     </Section>
   );
 }
