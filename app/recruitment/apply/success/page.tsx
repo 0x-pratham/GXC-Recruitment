@@ -2,6 +2,7 @@
 
 "use client";
 
+import { useEffect } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 
 import { Container } from "@/components/ui/Container";
@@ -10,6 +11,16 @@ import { LinkButton } from "@/components/ui/LinkButton";
 
 export default function SuccessPage() {
   const shouldReduceMotion = useReducedMotion();
+
+  useEffect(() => {
+    // Automatically redirect to the WhatsApp group after 4.5 seconds
+    const redirectTimer = setTimeout(() => {
+      window.location.href = "https://chat.whatsapp.com/D0f8B8hCLx6FmpgGsXJfuS";
+    }, 4500);
+
+    // Cleanup the timer if the component unmounts early
+    return () => clearTimeout(redirectTimer);
+  }, []);
 
   return (
     <Section className="flex min-h-[calc(100vh-64px)] items-center bg-gx-surface py-20 sm:py-24">
@@ -109,7 +120,7 @@ export default function SuccessPage() {
             We typically get back to applicants within 48 hours.
           </motion.p>
 
-          {/* WhatsApp follow-up */}
+          {/* Mandatory WhatsApp Group */}
           <motion.div
             initial={
               shouldReduceMotion
@@ -122,33 +133,52 @@ export default function SuccessPage() {
               delay: shouldReduceMotion ? 0 : 0.42,
               ease: [0.22, 1, 0.36, 1],
             }}
-            className="mt-10 flex flex-col items-center sm:mt-12"
+            className="
+              mt-10 
+              flex 
+              w-full 
+              max-w-lg 
+              flex-col 
+              items-center 
+              rounded-2xl 
+              border 
+              border-red-500/20 
+              bg-red-50/50 
+              p-6 
+              sm:mt-12 
+              sm:p-8
+            "
           >
-            <p className="text-base font-medium text-gx-ink">
-              Stay tuned with GenXCode.
+            <span className="mb-3 rounded-full bg-red-100 px-3 py-1 text-xs font-bold tracking-wider text-red-600">
+              ACTION REQUIRED
+            </span>
+            
+            <p className="text-lg font-medium text-gx-ink">
+              Join the GXC GC 2026-27 Batch
             </p>
 
-            <p className="mt-2 max-w-md text-sm leading-6 text-gx-ink/55">
-              Join our WhatsApp Channel for recruitment updates,
-              announcements and what&apos;s happening next.
+            <p className="mt-2 text-center text-sm leading-6 text-gx-ink/65">
+              It is <strong>compulsory</strong> to join this WhatsApp group. All further task assignments, interview schedules, and next steps for the recruitment process will be shared exclusively here.
             </p>
 
             <a
-              href="https://whatsapp.com/channel/0029VbDWVfRIN9ien14MPB1t"
+              href="https://chat.whatsapp.com/D0f8B8hCLx6FmpgGsXJfuS"
               target="_blank"
               rel="noopener noreferrer"
               className="
-                mt-5
+                group
+                mt-6
                 inline-flex
                 min-h-11
                 items-center
                 justify-center
                 rounded-gx-md
                 bg-[#25D366]
-                px-6
+                px-7
                 text-sm
                 font-medium
                 text-white
+                shadow-sm
                 transition-all
                 duration-300
                 hover:-translate-y-0.5
@@ -159,7 +189,7 @@ export default function SuccessPage() {
                 focus-visible:ring-offset-2
               "
             >
-              Join WhatsApp Channel
+              Join WhatsApp Group
               <span
                 aria-hidden="true"
                 className="ml-2 transition-transform duration-300 group-hover:translate-x-1"
@@ -167,6 +197,10 @@ export default function SuccessPage() {
                 →
               </span>
             </a>
+            
+            <p className="mt-4 text-xs font-medium text-gx-ink/60 animate-pulse">
+              Redirecting automatically in a few seconds...
+            </p>
           </motion.div>
 
           {/* Back to recruitment */}
@@ -181,7 +215,7 @@ export default function SuccessPage() {
               duration: 0.6,
               delay: shouldReduceMotion ? 0 : 0.55,
             }}
-            className="mt-7"
+            className="mt-8"
           >
             <LinkButton
               href="/recruitment"

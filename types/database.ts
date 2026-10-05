@@ -7,7 +7,9 @@ export type Database = {
         Row: {
           id: string;
           created_at: string;
-          full_name: string;
+          first_name: string;
+          last_name: string;
+          phone: string;
           email: string;
           institution: string;
           year_of_study: string;
@@ -19,7 +21,9 @@ export type Database = {
         Insert: {
           id?: string;
           created_at?: string;
-          full_name: string;
+          first_name: string;
+          last_name: string;
+          phone: string;
           email: string;
           institution: string;
           year_of_study: string;

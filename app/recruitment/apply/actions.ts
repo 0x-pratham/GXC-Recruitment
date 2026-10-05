@@ -16,7 +16,9 @@ export async function submitApplication(data: ApplicationFormValues) {
     const { error } = await (supabase
       .from("applications") as any)
       .insert({
-        full_name: validatedData.fullName,
+        first_name: validatedData.firstName,
+        last_name: validatedData.lastName,
+        phone: validatedData.phone,
         email: validatedData.email,
         institution: validatedData.institution,
         year_of_study: validatedData.year,

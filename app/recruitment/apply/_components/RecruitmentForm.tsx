@@ -58,7 +58,6 @@ export function RecruitmentForm() {
     }
   };
 
-  // Explicitly typed as Variants to fix the ease array TypeScript error
   const fieldMotion: Variants = {
     hidden: {
       opacity: 0,
@@ -116,10 +115,17 @@ export function RecruitmentForm() {
 
         <div className="grid grid-cols-1 gap-x-10 gap-y-7 md:grid-cols-2">
           <Input
-            label="Full Name"
-            placeholder="e.g. Prathamesh Bhil"
-            {...register("fullName")}
-            error={errors.fullName?.message}
+            label="First Name"
+            placeholder="e.g. Prathamesh"
+            {...register("firstName")}
+            error={errors.firstName?.message}
+          />
+
+          <Input
+            label="Last Name"
+            placeholder="e.g. Bhil"
+            {...register("lastName")}
+            error={errors.lastName?.message}
           />
 
           <Input
@@ -128,6 +134,14 @@ export function RecruitmentForm() {
             placeholder="hello@example.com"
             {...register("email")}
             error={errors.email?.message}
+          />
+
+          <Input
+            label="Phone Number"
+            type="tel"
+            placeholder="e.g. +91 98765 43210"
+            {...register("phone")}
+            error={errors.phone?.message}
           />
 
           <Input
@@ -251,18 +265,10 @@ export function RecruitmentForm() {
               "
             >
               <option value="">Select a track</option>
-              <option value="frontend">
-                Frontend Engineering
-              </option>
-              <option value="backend">
-                Backend Engineering
-              </option>
-              <option value="design">
-                Product Design
-              </option>
-              <option value="fullstack">
-                Full Stack Engineering
-              </option>
+              <option value="frontend">Frontend Engineering</option>
+              <option value="backend">Backend Engineering</option>
+              <option value="design">Product Design</option>
+              <option value="fullstack">Full Stack Engineering</option>
             </select>
 
             {errors.track && (

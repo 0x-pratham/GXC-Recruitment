@@ -12,8 +12,8 @@ export function RecruitmentCountdown() {
   useEffect(() => {
     setIsMounted(true);
 
-    // Target Date: Oct 2, 2026, 12:00 PM IST (05:30 ahead of UTC)
-    const targetDate = new Date("2026-10-02T12:00:00+05:30").getTime();
+    // Target Date: Oct 7, 2026, 12:40 AM IST (26 hours from current time)
+    const targetDate = new Date("2026-10-07T00:40:00+05:30").getTime();
 
     const interval = setInterval(() => {
       const now = new Date().getTime();
@@ -29,7 +29,8 @@ export function RecruitmentCountdown() {
         }, 3500); 
       } else {
         setTimeLeft({
-          hours: Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+          // Removed the 24h modulo so it correctly shows 26 hours instead of 2
+          hours: Math.floor(difference / (1000 * 60 * 60)),
           minutes: Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)),
           seconds: Math.floor((difference % (1000 * 60)) / 1000),
         });
