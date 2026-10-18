@@ -7,7 +7,6 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion, useReducedMotion, Variants } from "framer-motion";
-import { createClient } from "@/lib/supabase/client";
 
 import {
   applicationSchema,
