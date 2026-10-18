@@ -135,7 +135,7 @@ export function RecruitmentForm() {
           />
 
           <Input
-            label="Phone Number"
+            label="Phone Number (Whatsapp preferred)"
             type="tel"
             placeholder="e.g. +91 98765 43210"
             {...register("phone")}
