@@ -49,7 +49,7 @@ export async function submitApplication(data: ApplicationFormValues) {
       prn_number: validatedData.prnNumber,
       gender: validatedData.gender,
       year_of_study: validatedData.year,
-      track: validatedData.track,
+      track: validatedData.track ?? null,
       portfolio_url: validatedData.portfolioUrl || null,
       why_join: validatedData.whyJoin,
     });
