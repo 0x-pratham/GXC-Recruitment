@@ -2,6 +2,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { createClient } from "@/lib/supabase/client";
 import Link from "next/link";
 import Image from "next/image";
 import { Menu, X } from "lucide-react";
@@ -17,6 +19,42 @@ const NAV_LINKS = [
 
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isSignedIn, setIsSignedIn] = useState(false);
+  const [isSigningOut, setIsSigningOut] = useState(false);
+  const pathname = usePathname();
+  const router = useRouter();
+
+  useEffect(() => {
+    const supabase = createClient();
+    let active = true;
+
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      if (active) setIsSignedIn(Boolean(user));
+    });
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (active) setIsSignedIn(Boolean(session?.user));
+    });
+
+    return () => {
+      active = false;
+      subscription.unsubscribe();
+    };
+  }, []);
+
+  const onSignOut = async () => {
+    setIsSigningOut(true);
+    const supabase = createClient();
+    const { error } = await supabase.auth.signOut();
+    setIsSigningOut(false);
+
+    if (error) return;
+
+    setIsSignedIn(false);
+    setIsMobileMenuOpen(false);
+    router.replace("/auth/login");
+    router.refresh();
+  };
 
   useEffect(() => {
     if (isMobileMenuOpen) {
@@ -30,7 +68,7 @@ export function Header() {
   }, [isMobileMenuOpen]);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-gx-border bg-gx-background/80 backdrop-blur-md">
+    <header className="sticky top-0 z-50 w-full border-b border-white/70 bg-white/65 backdrop-blur-xl shadow-[0_4px_24px_rgba(50,20,90,0.04)]">
       <Container>
         <div className="flex h-16 items-center justify-between">
           {/* Logo now points to Root and uses the SVG icon */}
@@ -50,14 +88,26 @@ export function Header() {
               <Link 
                 key={link.label} 
                 href={link.href}
-                className="text-sm font-medium text-gx-ink/80 hover:text-gx-purple transition-colors"
+                className="gxc-glass-nav rounded-full px-4 py-2 text-sm font-medium text-gx-ink/80 hover:text-gx-purple transition-colors"
               >
                 {link.label}
               </Link>
             ))}
-            <LinkButton href="/recruitment/apply" size="sm">
-              Apply Now
-            </LinkButton>
+            {pathname !== "/recruitment/apply" && (
+              <LinkButton href="/recruitment/apply" size="sm">
+                Apply Now
+              </LinkButton>
+            )}
+            {isSignedIn && (
+              <button
+                type="button"
+                onClick={onSignOut}
+                disabled={isSigningOut}
+                className="gxc-glass-nav rounded-full px-4 py-2 text-sm font-medium text-gx-ink transition disabled:opacity-60"
+              >
+                {isSigningOut ? "Signing out…" : "Log out"}
+              </button>
+            )}
           </nav>
 
           <button 
@@ -78,7 +128,7 @@ export function Header() {
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
             style={{ willChange: "transform, opacity, height" }}
-            className="absolute top-16 left-0 w-full border-b border-gx-border bg-gx-background shadow-lg md:hidden overflow-hidden"
+            className="absolute top-16 left-0 w-full border-b border-gx-border bg-white/90 shadow-lg backdrop-blur-xl md:hidden overflow-hidden"
           >
             <Container className="py-8 flex flex-col gap-6">
               {NAV_LINKS.map((link) => (
@@ -91,15 +141,27 @@ export function Header() {
                   {link.label}
                 </Link>
               ))}
-              <div className="pt-8">
-                <LinkButton 
-                  href="/recruitment/apply" 
-                  size="lg"
-                  className="w-full"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  Start Application
-                </LinkButton>
+              <div className="pt-8 flex flex-col gap-3">
+                {pathname !== "/recruitment/apply" && (
+                  <LinkButton 
+                    href="/recruitment/apply" 
+                    size="lg"
+                    className="w-full"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    Start Application
+                  </LinkButton>
+                )}
+                {isSignedIn && (
+                  <button
+                    type="button"
+                    onClick={onSignOut}
+                    disabled={isSigningOut}
+                    className="w-full rounded-lg border border-gx-border px-4 py-3 text-base font-medium text-gx-ink disabled:opacity-60"
+                  >
+                    {isSigningOut ? "Signing out…" : "Log out"}
+                  </button>
+                )}
               </div>
             </Container>
           </motion.div>
