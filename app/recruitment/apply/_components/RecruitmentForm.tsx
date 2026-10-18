@@ -25,7 +25,6 @@ export function RecruitmentForm({ email }: { email: string }) {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
-  const [alreadyApplied, setAlreadyApplied] = useState(false);
 
   const {
     register,
@@ -44,13 +43,7 @@ export function RecruitmentForm({ email }: { email: string }) {
       const result = await submitApplication(data);
 
       if (!result.success) {
-        const message = result.error || "An unexpected error occurred.";
-        if (/already submitted an application|already submitted an application|already applied/i.test(message)) {
-          setAlreadyApplied(true);
-          setIsSubmitting(false);
-          return;
-        }
-        setServerError(message);
+        setServerError(result.error || "An unexpected error occurred.");
         setIsSubmitting(false);
         return;
       }
@@ -80,48 +73,7 @@ export function RecruitmentForm({ email }: { email: string }) {
   };
 
   return (
-    <>
-      {alreadyApplied && (
-        <div
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-gx-ink/50 px-4 py-6 backdrop-blur-sm"
-          role="presentation"
-          onClick={() => setAlreadyApplied(false)}
-        >
-          <section
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="already-applied-title"
-            className="w-full max-w-md rounded-gx-lg border border-gx-border bg-gx-background p-7 text-center shadow-2xl sm:p-9"
-            onClick={(event) => event.stopPropagation()}
-          >
-            <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-gx-purple/10 text-2xl text-gx-purple" aria-hidden="true">
-              ✓
-            </div>
-            <p className="text-sm font-semibold uppercase tracking-[0.14em] text-gx-purple">
-              Application received
-            </p>
-            <h2 id="already-applied-title" className="mt-3 font-serif text-3xl font-semibold text-gx-ink">
-              You&apos;re already on our list!
-            </h2>
-            <p className="mt-4 text-base leading-7 text-gx-ink/70">
-              You&apos;ve already submitted an application with this account. No need to apply again. Our team will review your application and share updates when there&apos;s news.
-            </p>
-            <div className="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
-              <Button type="button" size="lg" onClick={() => router.refresh()}>
-                Check application status
-              </Button>
-              <button
-                type="button"
-                onClick={() => setAlreadyApplied(false)}
-                className="min-h-11 rounded-gx-md border border-gx-border px-5 py-3 text-sm font-medium text-gx-ink transition-colors hover:bg-gx-surface"
-              >
-                Close
-              </button>
-            </div>
-          </section>
-        </div>
-      )}
-      <form
+    <form
       onSubmit={handleSubmit(onSubmit)}
       className="flex flex-col gap-20 sm:gap-24 md:gap-32"
     >
@@ -176,14 +128,9 @@ export function RecruitmentForm({ email }: { email: string }) {
           />
 
           <Input
-            label="College / Institution"
-            placeholder="Enter your college or institution"
-            {...register("institution")}
-            error={errors.institution?.message}
-          />
-
-          <Input
-            label="Email Address (we've already got this)"
+            label="Email Address (we've already got this)git fetch origin
+git switch deployment
+git pull origin deployment"
             type="email"
             {...register("email")}
             readOnly
@@ -329,6 +276,51 @@ export function RecruitmentForm({ email }: { email: string }) {
         </div>
 
         <div className="flex flex-col gap-7">
+          {/* Primary Track */}
+
+          <div className="flex w-full flex-col gap-2 md:max-w-xl">
+            <label
+              htmlFor="track"
+              className="text-sm font-medium text-gx-ink/80"
+            >
+              Primary Track
+            </label>
+
+            <select
+              id="track"
+              {...register("track")}
+              className="
+                h-12
+                w-full
+                border-0
+                border-b
+                border-gx-ink/15
+                bg-transparent
+                px-0
+                py-2
+                text-base
+                text-gx-ink
+                outline-none
+                transition-colors
+                duration-300
+                focus:border-gx-purple
+                focus:ring-0
+              "
+            >
+              <option value="">Select a track</option>
+              <option value="frontend">Frontend Engineering</option>
+              <option value="backend">Backend Engineering</option>
+              <option value="design">Product Design</option>
+              <option value="fullstack">Full Stack Engineering</option>
+            </select>
+
+            {errors.track && (
+              <span className="text-sm font-medium text-red-500">
+                {errors.track.message}
+              </span>
+            )}
+          </div>
+
           {/* Portfolio */}
 
           <div className="md:max-w-2xl">
@@ -418,7 +410,6 @@ export function RecruitmentForm({ email }: { email: string }) {
           provided is accurate.
         </p>
       </motion.div>
-      </form>
-    </>
+    </form>
   );
 }
