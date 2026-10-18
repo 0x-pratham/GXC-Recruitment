@@ -93,9 +93,11 @@ export function Header() {
                 {link.label}
               </Link>
             ))}
-            <LinkButton href="/recruitment/apply" size="sm">
-              Apply Now
-            </LinkButton>
+            {pathname !== "/recruitment/apply" && (
+              <LinkButton href="/recruitment/apply" size="sm">
+                Apply Now
+              </LinkButton>
+            )}
             {isSignedIn && (
               <button
                 type="button"
@@ -140,14 +142,16 @@ export function Header() {
                 </Link>
               ))}
               <div className="pt-8 flex flex-col gap-3">
-                <LinkButton 
-                  href="/recruitment/apply" 
-                  size="lg"
-                  className="w-full"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  Start Application
-                </LinkButton>
+                {pathname !== "/recruitment/apply" && (
+                  <LinkButton 
+                    href="/recruitment/apply" 
+                    size="lg"
+                    className="w-full"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    Start Application
+                  </LinkButton>
+                )}
                 {isSignedIn && (
                   <button
                     type="button"
