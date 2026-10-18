@@ -243,16 +243,12 @@
     }
   }
 }
-
 /* GXC glass layer: soft lavender glass and ambient hover bloom */
-:root{--gxc-glass:rgba(255,255,255,.64);--gxc-glass-border:rgba(255,255,255,.82);--gxc-lilac-glow:rgba(157,105,235,.20)}
-.gxc-glass-card{position:relative;isolation:isolate;overflow:hidden;border:1px solid var(--gxc-glass-border);border-radius:1.5rem;background:linear-gradient(145deg,rgba(255,255,255,.82),rgba(248,243,255,.58));box-shadow:0 14px 44px rgba(48,19,86,.045),inset 0 1px 0 rgba(255,255,255,.9);-webkit-backdrop-filter:blur(18px) saturate(145%);backdrop-filter:blur(18px) saturate(145%);transition:transform .42s cubic-bezier(.2,.8,.2,1),box-shadow .42s ease,border-color .42s ease,background .42s ease}
+:root{--gxc-lilac-glow:rgba(157,105,235,.20)}
+.gxc-glass-card{position:relative;isolation:isolate;overflow:hidden;border:1px solid rgba(255,255,255,.82);border-radius:1.5rem;background:linear-gradient(145deg,rgba(255,255,255,.82),rgba(248,243,255,.58));box-shadow:0 14px 44px rgba(48,19,86,.045),inset 0 1px 0 rgba(255,255,255,.9);-webkit-backdrop-filter:blur(18px) saturate(145%);backdrop-filter:blur(18px) saturate(145%);transition:transform .42s cubic-bezier(.2,.8,.2,1),box-shadow .42s ease,border-color .42s ease,background .42s ease}
 .gxc-glass-card::before{content:"";position:absolute;z-index:-1;inset:-35% -20%;pointer-events:none;opacity:0;background:radial-gradient(ellipse at 50% 45%,rgba(186,145,255,.28),transparent 62%);transition:opacity .45s ease}
 .gxc-glass-card:hover{transform:translateY(-6px);border-color:rgba(163,113,231,.38);background:linear-gradient(145deg,rgba(255,255,255,.94),rgba(247,240,255,.78));box-shadow:0 24px 70px rgba(83,39,137,.12),0 0 32px var(--gxc-lilac-glow),inset 0 1px 0 rgba(255,255,255,.96)}
-.gxc-glass-card:hover::before{opacity:1}
-.gxc-glass-card:focus-within{outline:2px solid rgba(96,39,149,.55);outline-offset:3px}
+.gxc-glass-card:hover::before{opacity:1}.gxc-glass-card:focus-within{outline:2px solid rgba(96,39,149,.55);outline-offset:3px}
 .gxc-glass-nav{border:1px solid rgba(255,255,255,.78);background:rgba(255,255,255,.48);box-shadow:inset 0 1px 0 rgba(255,255,255,.86),0 4px 16px rgba(70,36,105,.045);-webkit-backdrop-filter:blur(16px) saturate(145%);backdrop-filter:blur(16px) saturate(145%);transition:background .25s ease,box-shadow .25s ease,border-color .25s ease,transform .25s ease}
 .gxc-glass-nav:hover{background:rgba(242,232,255,.82);border-color:rgba(151,100,222,.35);box-shadow:0 0 24px rgba(163,113,231,.17),inset 0 1px 0 rgba(255,255,255,.95)}
-.gxc-glass-button{box-shadow:0 7px 20px rgba(96,39,149,.13),inset 0 1px 0 rgba(255,255,255,.2);transition:transform .28s ease,box-shadow .28s ease,background .28s ease}
-.gxc-glass-button:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(96,39,149,.22),0 0 24px rgba(171,126,245,.22),inset 0 1px 0 rgba(255,255,255,.26)}
-@media(prefers-reduced-motion:reduce){.gxc-glass-card,.gxc-glass-card::before,.gxc-glass-nav,.gxc-glass-button{transition:none!important}.gxc-glass-card:hover,.gxc-glass-button:hover{transform:none}}
+@media(prefers-reduced-motion:reduce){.gxc-glass-card,.gxc-glass-card::before,.gxc-glass-nav{transition:none!important}.gxc-glass-card:hover{transform:none}}
