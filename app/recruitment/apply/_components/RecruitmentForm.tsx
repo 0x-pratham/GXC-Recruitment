@@ -145,11 +145,52 @@ export function RecruitmentForm() {
           />
 
           <Input
-            label="Institution / University"
-            placeholder="e.g. JSPM University"
-            {...register("institution")}
-            error={errors.institution?.message}
+            label="PRN (Permanent Registration Number)"
+            placeholder="Enter your PRN"
+            {...register("prnNumber")}
+            error={errors.prnNumber?.message}
           />
+
+          <div className="flex w-full flex-col gap-2">
+            <label
+              htmlFor="gender"
+              className="text-sm font-medium text-gx-ink/80"
+            >
+              Gender
+            </label>
+
+            <select
+              id="gender"
+              {...register("gender")}
+              className="
+                h-12
+                w-full
+                border-0
+                border-b
+                border-gx-ink/15
+                bg-transparent
+                px-0
+                py-2
+                text-base
+                text-gx-ink
+                outline-none
+                transition-colors
+                duration-300
+                focus:border-gx-purple
+                focus:ring-0
+              "
+            >
+              <option value="">Select your gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+
+            {errors.gender && (
+              <span className="text-sm font-medium text-red-500">
+                {errors.gender.message}
+              </span>
+            )}
+          </div>
 
           <div className="flex w-full flex-col gap-2">
             <label
