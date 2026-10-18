@@ -25,6 +25,7 @@ export function RecruitmentForm({ email }: { email: string }) {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
+  const [alreadyApplied, setAlreadyApplied] = useState(false);
 
   const {
     register,
@@ -43,7 +44,13 @@ export function RecruitmentForm({ email }: { email: string }) {
       const result = await submitApplication(data);
 
       if (!result.success) {
-        setServerError(result.error || "An unexpected error occurred.");
+        const message = result.error || "An unexpected error occurred.";
+        if (/already submitted an application|already submitted an application|already applied/i.test(message)) {
+          setAlreadyApplied(true);
+          setIsSubmitting(false);
+          return;
+        }
+        setServerError(message);
         setIsSubmitting(false);
         return;
       }
@@ -73,8 +80,49 @@ export function RecruitmentForm({ email }: { email: string }) {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
+    <>
+      {alreadyApplied && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-gx-ink/50 px-4 py-6 backdrop-blur-sm"
+          role="presentation"
+          onClick={() => setAlreadyApplied(false)}
+        >
+          <section
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="already-applied-title"
+            className="w-full max-w-md rounded-gx-lg border border-gx-border bg-gx-background p-7 text-center shadow-2xl sm:p-9"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-gx-purple/10 text-2xl text-gx-purple" aria-hidden="true">
+              ✓
+            </div>
+            <p className="text-sm font-semibold uppercase tracking-[0.14em] text-gx-purple">
+              Application received
+            </p>
+            <h2 id="already-applied-title" className="mt-3 font-serif text-3xl font-semibold text-gx-ink">
+              You&apos;re already on our list!
+            </h2>
+            <p className="mt-4 text-base leading-7 text-gx-ink/70">
+              You&apos;ve already submitted an application with this account. No need to apply again. Our team will review your application and share updates when there&apos;s news.
+            </p>
+            <div className="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
+              <Button type="button" size="lg" onClick={() => router.refresh()}>
+                Check application status
+              </Button>
+              <button
+                type="button"
+                onClick={() => setAlreadyApplied(false)}
+                className="min-h-11 rounded-gx-md border border-gx-border px-5 py-3 text-sm font-medium text-gx-ink transition-colors hover:bg-gx-surface"
+              >
+                Close
+              </button>
+            </div>
+          </section>
+        </div>
+      )}
+      <form
+      onSubmit={handleSubmit(onSubmit)
       className="flex flex-col gap-20 sm:gap-24 md:gap-32"
     >
       {/* =========================================================
@@ -415,6 +463,7 @@ export function RecruitmentForm({ email }: { email: string }) {
           provided is accurate.
         </p>
       </motion.div>
-    </form>
+      </form>
+    </>
   );
 }
