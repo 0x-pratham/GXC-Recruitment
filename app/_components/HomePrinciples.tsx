@@ -147,12 +147,14 @@ export function HomePrinciples() {
               PRINCIPLES
               ===================================================== */}
 
-          <div className="flex flex-col gap-20 sm:gap-28 md:gap-36 lg:gap-44">
+          <div className="flex flex-col gap-8 sm:gap-10 md:gap-12 lg:gap-14">
             {PRINCIPLES.map((principle) => (
               <article
                 key={principle.title}
                 className="
+                  gxc-glass-card
                   principle
+                  p-7 sm:p-9 md:p-10
                   opacity-0
                   grid
                   gap-7
