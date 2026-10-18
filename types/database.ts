@@ -28,6 +28,7 @@ export type Database = {
           created_at: string;
           first_name: string;
           last_name: string;
+          institution: string;
           phone: string;
           email: string;
           prn_number: string | null;
@@ -43,6 +44,7 @@ export type Database = {
           created_at?: string;
           first_name: string;
           last_name: string;
+          institution: string;
           phone: string;
           email: string;
           prn_number?: string | null;
@@ -58,6 +60,7 @@ export type Database = {
           created_at?: string;
           first_name?: string;
           last_name?: string;
+          institution?: string;
           phone?: string;
           email?: string;
           prn_number?: string | null;
