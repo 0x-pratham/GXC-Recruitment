@@ -4,6 +4,7 @@ import * as z from "zod";
 export const applicationSchema = z.object({
   firstName: z.string().min(2, "First name must be at least 2 characters"),
   lastName: z.string().min(2, "Last name must be at least 2 characters"),
+  institution: z.string().trim().min(2, "Please enter your institution name"),
   email: z.string().email("Please enter a valid email address"),
   phone: z.string().min(10, "Please enter a valid phone number"),
   prnNumber: z.string().trim().min(1, "PRN number is required"),
