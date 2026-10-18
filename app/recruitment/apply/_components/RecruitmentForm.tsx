@@ -329,51 +329,6 @@ export function RecruitmentForm({ email }: { email: string }) {
         </div>
 
         <div className="flex flex-col gap-7">
-          {/* Primary Track */}
-
-          <div className="flex w-full flex-col gap-2 md:max-w-xl">
-            <label
-              htmlFor="track"
-              className="text-sm font-medium text-gx-ink/80"
-            >
-              Primary Track
-            </label>
-
-            <select
-              id="track"
-              {...register("track")}
-              className="
-                h-12
-                w-full
-                border-0
-                border-b
-                border-gx-ink/15
-                bg-transparent
-                px-0
-                py-2
-                text-base
-                text-gx-ink
-                outline-none
-                transition-colors
-                duration-300
-                focus:border-gx-purple
-                focus:ring-0
-              "
-            >
-              <option value="">Select a track</option>
-              <option value="frontend">Frontend Engineering</option>
-              <option value="backend">Backend Engineering</option>
-              <option value="design">Product Design</option>
-              <option value="fullstack">Full Stack Engineering</option>
-            </select>
-
-            {errors.track && (
-              <span className="text-sm font-medium text-red-500">
-                {errors.track.message}
-              </span>
-            )}
-          </div>
-
           {/* Portfolio */}
 
           <div className="md:max-w-2xl">
