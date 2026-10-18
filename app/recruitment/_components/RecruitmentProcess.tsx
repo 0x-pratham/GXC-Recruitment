@@ -158,7 +158,7 @@ export function RecruitmentProcess() {
                   delay: shouldReduceMotion ? 0 : index * 0.06,
                   ease: [0.22, 1, 0.36, 1],
                 }}
-                className="group"
+                className="gxc-glass-card group p-7 sm:p-8 md:p-9"
               >
                 {/* Large title */}
 
