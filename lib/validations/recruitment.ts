@@ -12,9 +12,7 @@ export const applicationSchema = z.object({
     error: "Please select your gender",
   }),
   year: z.string().min(1, "Please select your year of study"),
-  track: z.enum(["frontend", "backend", "design", "fullstack"], {
-    error: "Please select a domain track",
-  }),
+  track: z.enum(["frontend", "backend", "design", "fullstack"]).optional(),
   portfolioUrl: z.string().url("Please enter a valid URL").optional().or(z.literal("")),
   whyJoin: z.string().min(50, "Please tell us a bit more (minimum 50 characters)"),
 });
