@@ -122,7 +122,7 @@ export function RecruitmentForm({ email }: { email: string }) {
         </div>
       )}
       <form
-      onSubmit={handleSubmit(onSubmit)
+      onSubmit={handleSubmit(onSubmit)}
       className="flex flex-col gap-20 sm:gap-24 md:gap-32"
     >
       {/* =========================================================
