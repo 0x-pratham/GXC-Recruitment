@@ -155,7 +155,7 @@ export function RecruitmentIntro() {
                   delay: shouldReduceMotion ? 0 : index * 0.08,
                   ease: [0.22, 1, 0.36, 1],
                 }}
-                className="group"
+                className="gxc-glass-card group p-7 sm:p-8"
               >
                 {/* Large value title */}
 
