@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion, useReducedMotion, Variants } from "framer-motion";
+import { createClient } from "@/lib/supabase/client";
 
 import {
   applicationSchema,
@@ -19,12 +20,30 @@ import { Button } from "@/components/ui/Button";
 
 import { submitApplication } from "../actions";
 
-export function RecruitmentForm() {
+export function RecruitmentForm({ email }: { email: string }) {
   const router = useRouter();
   const shouldReduceMotion = useReducedMotion();
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSigningOut, setIsSigningOut] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
+
+  const onSignOut = async () => {
+    setIsSigningOut(true);
+    setServerError(null);
+
+    const supabase = createClient();
+    const { error } = await supabase.auth.signOut();
+
+    if (error) {
+      setServerError("We couldn't sign you out. Please try again.");
+      setIsSigningOut(false);
+      return;
+    }
+
+    router.replace("/auth/login");
+    router.refresh();
+  };
 
   const {
     register,
@@ -32,6 +51,7 @@ export function RecruitmentForm() {
     formState: { errors },
   } = useForm<ApplicationFormValues>({
     resolver: zodResolver(applicationSchema),
+    defaultValues: { email },
   });
 
   const onSubmit = async (data: ApplicationFormValues) => {
@@ -76,6 +96,21 @@ export function RecruitmentForm() {
       onSubmit={handleSubmit(onSubmit)}
       className="flex flex-col gap-20 sm:gap-24 md:gap-32"
     >
+      <div className="flex flex-wrap items-center justify-between gap-4 rounded-lg border border-gx-border bg-gx-surface/60 px-4 py-3 sm:px-5">
+        <div>
+          <p className="text-sm font-medium text-gx-ink">Signed in as {email}</p>
+          <p className="mt-1 text-xs text-gx-ink/55">Sign out to end your session and require Google sign-in again.</p>
+        </div>
+        <button
+          type="button"
+          onClick={onSignOut}
+          disabled={isSigningOut || isSubmitting}
+          className="rounded-lg border border-gx-border px-4 py-2 text-sm font-medium text-gx-ink transition hover:bg-gx-background disabled:cursor-not-allowed disabled:opacity-60"
+        >
+          {isSigningOut ? "Signing out…" : "Log out"}
+        </button>
+      </div>
+
       {/* =========================================================
           PERSONAL INFORMATION
       ========================================================= */}
@@ -127,10 +162,12 @@ export function RecruitmentForm() {
           />
 
           <Input
-            label="Email Address"
+            label="Email Address (we've already got this)"
             type="email"
-            placeholder="hello@example.com"
             {...register("email")}
+            readOnly
+            aria-readonly="true"
+            className="bg-gx-surface text-gx-ink/70 cursor-not-allowed"
             error={errors.email?.message}
           />
 

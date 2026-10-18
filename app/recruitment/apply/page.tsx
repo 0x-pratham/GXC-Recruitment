@@ -36,7 +36,7 @@ export default async function ApplyPage() {
           <p className="text-lg text-gx-ink/80">Applications are open until further notice. Fill out the form below and our team will be in touch.</p>
           <p className="mt-4 text-sm text-gx-ink/55">Signed in with Google as <span className="font-medium text-gx-ink">{user.email}</span>.</p>
         </div>
-        <RecruitmentForm />
+        <RecruitmentForm email={user.email ?? ""} />
       </div>
     </Container>
   </Section>;
