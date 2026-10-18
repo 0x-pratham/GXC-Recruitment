@@ -128,7 +128,7 @@ export function RecruitmentForm({ email }: { email: string }) {
           />
 
           <Input
-            label="Email Address (Google account)"
+            label="Email Address (we've already got this)"
             type="email"
             {...register("email")}
             readOnly
