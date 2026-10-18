@@ -25,25 +25,7 @@ export function RecruitmentForm({ email }: { email: string }) {
   const shouldReduceMotion = useReducedMotion();
 
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSigningOut, setIsSigningOut] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
-
-  const onSignOut = async () => {
-    setIsSigningOut(true);
-    setServerError(null);
-
-    const supabase = createClient();
-    const { error } = await supabase.auth.signOut();
-
-    if (error) {
-      setServerError("We couldn't sign you out. Please try again.");
-      setIsSigningOut(false);
-      return;
-    }
-
-    router.replace("/auth/login");
-    router.refresh();
-  };
 
   const {
     register,
@@ -96,21 +78,6 @@ export function RecruitmentForm({ email }: { email: string }) {
       onSubmit={handleSubmit(onSubmit)}
       className="flex flex-col gap-20 sm:gap-24 md:gap-32"
     >
-      <div className="flex flex-wrap items-center justify-between gap-4 rounded-lg border border-gx-border bg-gx-surface/60 px-4 py-3 sm:px-5">
-        <div>
-          <p className="text-sm font-medium text-gx-ink">Signed in as {email}</p>
-          <p className="mt-1 text-xs text-gx-ink/55">Sign out to end your session and require Google sign-in again.</p>
-        </div>
-        <button
-          type="button"
-          onClick={onSignOut}
-          disabled={isSigningOut || isSubmitting}
-          className="rounded-lg border border-gx-border px-4 py-2 text-sm font-medium text-gx-ink transition hover:bg-gx-background disabled:cursor-not-allowed disabled:opacity-60"
-        >
-          {isSigningOut ? "Signing out…" : "Log out"}
-        </button>
-      </div>
-
       {/* =========================================================
           PERSONAL INFORMATION
       ========================================================= */}
