@@ -55,11 +55,31 @@ export async function submitApplication(data: ApplicationFormValues) {
     });
 
     if (error) {
+      const databaseError = `${error.message ?? ""} ${error.details ?? ""}`;
+
+      if (databaseError.includes("APPLICATION_CAPACITY_FULL_FEMALE")) {
+        return {
+          success: false,
+          error: "We're sorry, all 25 seats for female applicants are now filled. No vacancies remain in this category. Thank you for your interest in GenXCode.",
+        };
+      }
+
+      if (databaseError.includes("APPLICATION_CAPACITY_FULL_MALE")) {
+        return {
+          success: false,
+          error: "We're sorry, all 16 seats for male applicants are now filled. No vacancies remain in this category. Thank you for your interest in GenXCode.",
+        };
+      }
+
+      if (databaseError.includes("APPLICATION_GENDER_REQUIRED")) {
+        return { success: false, error: "Please select your gender before submitting your application." };
+      }
+
       if (error.code === "23505") {
         return { success: false, error: "You've already submitted an application. You can check its status on the application page." };
       }
 
-      console.error("Database Error:", error.message);
+      console.error("Database Error:", error.message, error.details);
       return { success: false, error: "We encountered an issue saving your application. Please try again." };
     }
 
