@@ -211,6 +211,18 @@ export function RecruitmentHero() {
 
             <LinkButton
               href="#tracks"
+              onClick={(event) => {
+                event.preventDefault();
+                document.getElementById("tracks")?.scrollIntoView({
+                  behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+                    ? "auto"
+                    : "smooth",
+                  block: "start",
+                });
+                if (window.location.hash !== "#tracks") {
+                  window.history.replaceState(null, "", "#tracks");
+                }
+              }}
               variant="outline"
               size="lg"
               className="
