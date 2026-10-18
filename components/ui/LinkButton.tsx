@@ -11,7 +11,7 @@ export interface LinkButtonProps extends Omit<React.AnchorHTMLAttributes<HTMLAnc
 
 export const LinkButton = React.forwardRef<HTMLAnchorElement, LinkButtonProps>(
   ({ className, variant = "primary", size = "md", ...props }, ref) => {
-    const baseStyles = "inline-flex items-center justify-center font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gx-purple rounded-gx-md";
+    const baseStyles = "gxc-glass-button inline-flex items-center justify-center font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gx-purple rounded-gx-md";
     
     const variants = {
       primary: "bg-gx-purple text-white hover:bg-[#4a1d75]",
