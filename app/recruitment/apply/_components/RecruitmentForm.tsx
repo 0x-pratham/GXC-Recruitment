@@ -128,6 +128,13 @@ export function RecruitmentForm({ email }: { email: string }) {
           />
 
           <Input
+            label="College / Institution"
+            placeholder="Enter your college or institution"
+            {...register("institution")}
+            error={errors.institution?.message}
+          />
+
+          <Input
             label="Email Address (we've already got this)"
             type="email"
             {...register("email")}
