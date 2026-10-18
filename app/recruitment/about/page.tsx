@@ -25,22 +25,22 @@ export default function AboutPage() {
 
       <Section className="bg-gx-background">
         <Container>
-          <div className="mx-auto max-w-3xl space-y-12 text-lg text-gx-ink/80 leading-relaxed">
-            <div>
+          <div className="mx-auto grid max-w-5xl gap-6 text-lg text-gx-ink/80 leading-relaxed md:grid-cols-2">
+            <div className="gxc-glass-card p-7 sm:p-9">
               <h2 className="mb-4 font-serif text-2xl font-semibold text-gx-ink">Our Mission</h2>
               <p>
                 At GenXCode, our mission is simple: build software that matters. We believe that great products are born from a deep understanding of user needs, paired with uncompromising technical execution. We don't just assemble frameworks; we craft experiences that are fast, accessible, and beautiful.
               </p>
             </div>
             
-            <div>
+            <div className="gxc-glass-card p-7 sm:p-9">
               <h2 className="mb-4 font-serif text-2xl font-semibold text-gx-ink">The Culture</h2>
               <p>
                 We operate on high trust and high autonomy. You won't find micromanagement here. Instead, you'll find a team that expects you to take ownership of your work, voice your ideas, and challenge the status quo. We value clear communication, continuous learning, and a willingness to step outside your comfort zone.
               </p>
             </div>
 
-            <div>
+            <div className="gxc-glass-card p-7 sm:p-9 md:col-span-2">
               <h2 className="mb-4 font-serif text-2xl font-semibold text-gx-ink">Why Join Us?</h2>
               <p>
                 Because you want to do the best work of your career. You'll be surrounded by peers who care about the craft just as much as you do. We provide the tools, the environment, and the challenges necessary for you to grow exponentially.

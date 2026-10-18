@@ -119,7 +119,7 @@ export function RecruitmentTracks() {
                 delay: shouldReduceMotion ? 0 : index * 0.08,
                 ease: [0.22, 1, 0.36, 1],
               }}
-              className="group relative"
+              className="gxc-glass-card group relative p-6 sm:p-7 lg:p-6"
             >
               <div className="flex min-h-full flex-col">
                 <h3
