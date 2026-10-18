@@ -34,6 +34,9 @@ BEGIN
 END;
 $$;
 
+-- The function is only invoked by the Auth trigger, not exposed as an RPC.
+REVOKE EXECUTE ON FUNCTION public.sync_profile_email_from_auth() FROM PUBLIC, anon, authenticated;
+
 DROP TRIGGER IF EXISTS on_auth_user_profile_email_sync ON auth.users;
 CREATE TRIGGER on_auth_user_profile_email_sync
   AFTER INSERT OR UPDATE OF email ON auth.users
