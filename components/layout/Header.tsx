@@ -4,6 +4,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Container } from "@/components/ui/Container";
@@ -16,6 +17,8 @@ const NAV_LINKS = [
 ];
 
 export function Header() {
+  const pathname = usePathname();
+  const isApplicationPage = pathname === "/recruitment/apply";
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
@@ -29,41 +32,47 @@ export function Header() {
     };
   }, [isMobileMenuOpen]);
 
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [pathname]);
+
   return (
     <header className="sticky top-0 z-50 w-full border-b border-gx-border bg-gx-background/80 backdrop-blur-md">
       <Container>
         <div className="flex h-16 items-center justify-between">
-          {/* Logo now points to Root and uses the SVG icon */}
           <Link href="/" className="flex items-center gap-2 transition-transform active:scale-95">
-            <Image 
-              src="/icon.svg" 
-              alt="GenXCode Logo" 
-              width={32} 
-              height={32} 
-              className="h-8 w-auto" 
-              priority 
+            <Image
+              src="/icon.svg"
+              alt="GenXCode Logo"
+              width={32}
+              height={32}
+              className="h-8 w-auto"
+              priority
             />
           </Link>
 
           <nav className="hidden md:flex items-center gap-8">
             {NAV_LINKS.map((link) => (
-              <Link 
-                key={link.label} 
+              <Link
+                key={link.label}
                 href={link.href}
                 className="text-sm font-medium text-gx-ink/80 hover:text-gx-purple transition-colors"
               >
                 {link.label}
               </Link>
             ))}
-            <LinkButton href="/recruitment/apply" size="sm">
-              Apply Now
-            </LinkButton>
+            {!isApplicationPage && (
+              <LinkButton href="/recruitment/apply" size="sm">
+                Apply Now
+              </LinkButton>
+            )}
           </nav>
 
-          <button 
+          <button
             className="md:hidden p-2 -mr-2 text-gx-ink active:scale-95 transition-transform"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            aria-label="Toggle Menu"
+            aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isMobileMenuOpen}
           >
             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -91,16 +100,18 @@ export function Header() {
                   {link.label}
                 </Link>
               ))}
-              <div className="pt-8">
-                <LinkButton 
-                  href="/recruitment/apply" 
-                  size="lg"
-                  className="w-full"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  Start Application
-                </LinkButton>
-              </div>
+              {!isApplicationPage && (
+                <div className="pt-8">
+                  <LinkButton
+                    href="/recruitment/apply"
+                    size="lg"
+                    className="w-full"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    Start Application
+                  </LinkButton>
+                </div>
+              )}
             </Container>
           </motion.div>
         )}
