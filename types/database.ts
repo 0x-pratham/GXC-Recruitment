@@ -34,7 +34,7 @@ export type Database = {
           prn_number: string | null;
           gender: "male" | "female" | null;
           year_of_study: string;
-          track: "frontend" | "backend" | "design" | "fullstack";
+          track: "frontend" | "backend" | "design" | "fullstack" | null;
           portfolio_url: string | null;
           why_join: string;
           status: "pending" | "reviewed" | "accepted" | "rejected";
@@ -50,7 +50,7 @@ export type Database = {
           prn_number?: string | null;
           gender?: "male" | "female" | null;
           year_of_study: string;
-          track: "frontend" | "backend" | "design" | "fullstack";
+          track: "frontend" | "backend" | "design" | "fullstack" | null;
           portfolio_url?: string | null;
           why_join: string;
           status?: "pending" | "reviewed" | "accepted" | "rejected";
@@ -66,7 +66,7 @@ export type Database = {
           prn_number?: string | null;
           gender?: "male" | "female" | null;
           year_of_study?: string;
-          track?: "frontend" | "backend" | "design" | "fullstack";
+          track?: "frontend" | "backend" | "design" | "fullstack" | null;
           portfolio_url?: string | null;
           why_join?: string;
           status?: "pending" | "reviewed" | "accepted" | "rejected";
