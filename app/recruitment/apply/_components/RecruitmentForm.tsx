@@ -19,7 +19,7 @@ import { Button } from "@/components/ui/Button";
 
 import { submitApplication } from "../actions";
 
-export function RecruitmentForm() {
+export function RecruitmentForm({ email }: { email: string }) {
   const router = useRouter();
   const shouldReduceMotion = useReducedMotion();
 
@@ -32,6 +32,7 @@ export function RecruitmentForm() {
     formState: { errors },
   } = useForm<ApplicationFormValues>({
     resolver: zodResolver(applicationSchema),
+    defaultValues: { email },
   });
 
   const onSubmit = async (data: ApplicationFormValues) => {
@@ -127,10 +128,12 @@ export function RecruitmentForm() {
           />
 
           <Input
-            label="Email Address"
+            label="Email Address (Google account)"
             type="email"
-            placeholder="hello@example.com"
             {...register("email")}
+            readOnly
+            aria-readonly="true"
+            className="bg-gx-surface text-gx-ink/70 cursor-not-allowed"
             error={errors.email?.message}
           />
 
