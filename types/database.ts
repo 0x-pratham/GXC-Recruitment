@@ -11,7 +11,8 @@ export type Database = {
           last_name: string;
           phone: string;
           email: string;
-          institution: string;
+          prn_number: string | null;
+          gender: "male" | "female" | null;
           year_of_study: string;
           track: "frontend" | "backend" | "design" | "fullstack";
           portfolio_url: string | null;
@@ -25,7 +26,8 @@ export type Database = {
           last_name: string;
           phone: string;
           email: string;
-          institution: string;
+          prn_number?: string | null;
+          gender?: "male" | "female" | null;
           year_of_study: string;
           track: "frontend" | "backend" | "design" | "fullstack";
           portfolio_url?: string | null;

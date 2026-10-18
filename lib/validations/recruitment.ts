@@ -6,7 +6,10 @@ export const applicationSchema = z.object({
   lastName: z.string().min(2, "Last name must be at least 2 characters"),
   email: z.string().email("Please enter a valid email address"),
   phone: z.string().min(10, "Please enter a valid phone number"),
-  institution: z.string().min(2, "Institution name is required"),
+  prnNumber: z.string().trim().min(1, "PRN number is required"),
+  gender: z.enum(["male", "female"], {
+    error: "Please select your gender",
+  }),
   year: z.string().min(1, "Please select your year of study"),
   track: z.enum(["frontend", "backend", "design", "fullstack"], {
     error: "Please select a domain track",

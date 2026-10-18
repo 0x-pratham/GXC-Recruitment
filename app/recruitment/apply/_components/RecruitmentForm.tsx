@@ -42,9 +42,7 @@ export function RecruitmentForm() {
       const result = await submitApplication(data);
 
       if (!result.success) {
-        setServerError(
-          result.error || "An unexpected error occurred."
-        );
+        setServerError(result.error || "An unexpected error occurred.");
         setIsSubmitting(false);
         return;
       }
@@ -52,7 +50,7 @@ export function RecruitmentForm() {
       router.push("/recruitment/apply/success");
     } catch {
       setServerError(
-        "Something went wrong while submitting your application. Please try again."
+        "Something went wrong while submitting your application. Please try again.",
       );
       setIsSubmitting(false);
     }
@@ -137,7 +135,7 @@ export function RecruitmentForm() {
           />
 
           <Input
-            label="Phone Number"
+            label="Phone Number (Whatsapp preferred)"
             type="tel"
             placeholder="e.g. +91 98765 43210"
             {...register("phone")}
@@ -145,11 +143,52 @@ export function RecruitmentForm() {
           />
 
           <Input
-            label="Institution / University"
-            placeholder="e.g. JSPM University"
-            {...register("institution")}
-            error={errors.institution?.message}
+            label="PRN (Permanent Registration Number)"
+            placeholder="Enter your PRN"
+            {...register("prnNumber")}
+            error={errors.prnNumber?.message}
           />
+
+          <div className="flex w-full flex-col gap-2">
+            <label
+              htmlFor="gender"
+              className="text-sm font-medium text-gx-ink/80"
+            >
+              Gender
+            </label>
+
+            <select
+              id="gender"
+              {...register("gender")}
+              className="
+                h-12
+                w-full
+                border-0
+                border-b
+                border-gx-ink/15
+                bg-transparent
+                px-0
+                py-2
+                text-base
+                text-gx-ink
+                outline-none
+                transition-colors
+                duration-300
+                focus:border-gx-purple
+                focus:ring-0
+              "
+            >
+              <option value="">Select your gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+
+            {errors.gender && (
+              <span className="text-sm font-medium text-red-500">
+                {errors.gender.message}
+              </span>
+            )}
+          </div>
 
           <div className="flex w-full flex-col gap-2">
             <label
@@ -185,7 +224,6 @@ export function RecruitmentForm() {
               <option value="Second Year">Second Year</option>
               <option value="Third Year">Third Year</option>
               <option value="Final Year">Final Year</option>
-              <option value="Graduated">Graduated</option>
             </select>
 
             {errors.year && (
@@ -227,8 +265,8 @@ export function RecruitmentForm() {
           </h2>
 
           <p className="mt-5 max-w-xl text-base leading-7 text-gx-ink/60 sm:text-lg">
-            Tell us where your technical interests lie and what you
-            would like to contribute to GenXCode.
+            Tell us where your technical interests lie and what you would like
+            to contribute to GenXCode.
           </p>
         </div>
 
@@ -310,11 +348,7 @@ export function RecruitmentForm() {
 
       {serverError && (
         <motion.div
-          initial={
-            shouldReduceMotion
-              ? { opacity: 1 }
-              : { opacity: 0, y: 10 }
-          }
+          initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           className="
             max-w-2xl
@@ -338,9 +372,7 @@ export function RecruitmentForm() {
 
       <motion.div
         initial={
-          shouldReduceMotion
-            ? { opacity: 1, y: 0 }
-            : { opacity: 0, y: 20 }
+          shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }
         }
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
@@ -350,13 +382,7 @@ export function RecruitmentForm() {
         }}
         className="flex flex-col items-start gap-5"
       >
-        <motion.div
-          whileTap={
-            shouldReduceMotion
-              ? undefined
-              : { scale: 0.98 }
-          }
-        >
+        <motion.div whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}>
           <Button
             type="submit"
             size="lg"
@@ -370,15 +396,13 @@ export function RecruitmentForm() {
               hover:-translate-y-0.5
             "
           >
-            {isSubmitting
-              ? "Submitting..."
-              : "Submit Application"}
+            {isSubmitting ? "Submitting..." : "Submit Application"}
           </Button>
         </motion.div>
 
         <p className="max-w-md text-sm leading-6 text-gx-ink/45">
-          By submitting this application, you confirm that the
-          information provided is accurate.
+          By submitting this application, you confirm that the information
+          provided is accurate.
         </p>
       </motion.div>
     </form>
