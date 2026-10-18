@@ -2,61 +2,74 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { ArrowRight, X } from "lucide-react";
+import Link from "next/link";
 
 export function WelcomePopup() {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    // Check if the user has already seen the popup
-    const hasSeenPopup = localStorage.getItem("gxc_welcome_dismissed");
-    
+    // Version the key so returning visitors can see the reopening announcement once.
+    const hasSeenPopup = localStorage.getItem("gxc_reopening_announcement_v1");
+
     if (!hasSeenPopup) {
-      // Add a slight 1.5s delay so it doesn't interrupt the initial page load animation
-      const timer = setTimeout(() => setIsVisible(true), 1500);
+      const timer = setTimeout(() => setIsVisible(true), 1800);
       return () => clearTimeout(timer);
     }
   }, []);
 
   const handleDismiss = () => {
     setIsVisible(false);
-    // Save to local storage so they don't see it again on future visits
-    localStorage.setItem("gxc_welcome_dismissed", "true");
+    localStorage.setItem("gxc_reopening_announcement_v1", "true");
   };
 
   return (
     <AnimatePresence>
       {isVisible && (
-        <motion.div
-          initial={{ opacity: 0, y: 40, scale: 0.95 }}
+        <motion.aside
+          initial={{ opacity: 0, y: 28, scale: 0.97 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: 20, scale: 0.95 }}
-          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-          className="fixed bottom-6 right-6 z-50 w-full max-w-sm rounded-gx-md border border-gx-border bg-gx-surface p-6 shadow-2xl"
+          exit={{ opacity: 0, y: 16, scale: 0.98 }}
+          transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+          role="dialog"
+          aria-labelledby="reopening-title"
+          aria-describedby="reopening-description"
+          className="fixed bottom-4 right-4 z-[60] w-[calc(100%-2rem)] max-w-sm rounded-gx-md border border-gx-border bg-gx-surface p-6 shadow-2xl sm:bottom-6 sm:right-6"
         >
           <button
             onClick={handleDismiss}
-            className="absolute right-4 top-4 text-gx-ink/50 transition-colors hover:text-gx-ink"
-            aria-label="Close"
+            className="absolute right-3 top-3 rounded-full p-2 text-gx-ink/60 transition-colors hover:bg-gx-background hover:text-gx-ink"
+            aria-label="Dismiss recruitment announcement"
           >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M18 6 6 18" />
-              <path d="m6 6 12 12" />
-            </svg>
+            <X size={18} />
           </button>
 
-          {/* Uses your global CSS Times New Roman h3 styling */}
-          <h3 className="mb-3 text-2xl">Don&apos;t Miss Out</h3>
-          
-          <p className="mb-4 text-sm leading-relaxed text-gx-ink/80">
-            Limited seats are available. Hurry up team, don&apos;t miss this opportunity to build with us!
+          <span className="mb-3 inline-flex items-center gap-2 rounded-full bg-gx-lavender/70 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-gx-purple">
+            Recruitment reopened
+          </span>
+          <h2 id="reopening-title" className="mb-2 pr-5 font-serif text-2xl text-gx-ink">
+            Your next chapter starts here.
+          </h2>
+          <p id="reopening-description" className="mb-5 text-sm leading-relaxed text-gx-ink/80">
+            Applications to join GenXCode are open again. Find your track, bring your curiosity and build something meaningful with us.
           </p>
 
-          <div className="flex items-center justify-between">
-            <span className="text-sm font-semibold italic text-gx-purple">
-              ~ From Pratham
-            </span>
+          <div className="flex flex-col gap-2 sm:flex-row">
+            <Link
+              href="/recruitment/apply"
+              onClick={handleDismiss}
+              className="inline-flex min-h-11 flex-1 items-center justify-center gap-2 rounded-gx-md bg-gx-purple px-4 py-2 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+            >
+              Apply now <ArrowRight size={16} />
+            </Link>
+            <button
+              onClick={handleDismiss}
+              className="min-h-11 rounded-gx-md border border-gx-border px-4 py-2 text-sm font-medium text-gx-ink transition-colors hover:bg-gx-background"
+            >
+              Maybe later
+            </button>
           </div>
-        </motion.div>
+        </motion.aside>
       )}
     </AnimatePresence>
   );

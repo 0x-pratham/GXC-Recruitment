@@ -3,16 +3,20 @@
 
 import { createClient } from "@/lib/supabase/server";
 import { applicationSchema, type ApplicationFormValues } from "@/lib/validations/recruitment";
+import { RECRUITMENT_OPEN } from "@/lib/recruitment-config";
 
 export async function submitApplication(data: ApplicationFormValues) {
-  try {
-    // 1. Strict Server-Side Validation
-    const validatedData = applicationSchema.parse(data);
+  if (!RECRUITMENT_OPEN) {
+    return {
+      success: false,
+      error: "Recruitment is currently closed. Please check back for the next announcement.",
+    };
+  }
 
-    // 2. Initialize the Supabase Server Client
+  try {
+    const validatedData = applicationSchema.parse(data);
     const supabase = await createClient();
 
-    // 3. Insert into PostgreSQL (casting payload to 'any' fixes the TypeScript never[] inference error)
     const { error } = await (supabase
       .from("applications") as any)
       .insert({
@@ -29,19 +33,18 @@ export async function submitApplication(data: ApplicationFormValues) {
 
     if (error) {
       console.error("Database Error:", error.message);
-      return { 
-        success: false, 
-        error: "We encountered an issue saving your application. Please try again." 
+      return {
+        success: false,
+        error: "We encountered an issue saving your application. Please try again.",
       };
     }
 
     return { success: true };
-    
   } catch (error) {
     console.error("Validation/Server Error:", error);
-    return { 
-      success: false, 
-      error: "Invalid data submitted. Please check your form and try again." 
+    return {
+      success: false,
+      error: "Invalid data submitted. Please check your form and try again.",
     };
   }
 }
