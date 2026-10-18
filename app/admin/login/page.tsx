@@ -1,3 +1,5 @@
+import { redirect } from "next/navigation";
+import { createClient } from "@/lib/supabase/server";
 import { AdminLoginForm } from "./_components/AdminLoginForm";
 
 export const metadata = {
@@ -5,7 +7,21 @@ export const metadata = {
   robots: { index: false, follow: false },
 };
 
-export default function AdminLoginPage() {
+export default async function AdminLoginPage() {
+  // Reuse an existing Supabase session. Google-authenticated admins should
+  // land directly in the dashboard instead of being asked for a password.
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (user) {
+    const { data: isAdmin, error } = await (supabase.rpc as any)("is_admin");
+    if (!error && isAdmin === true) {
+      redirect("/admin");
+    }
+  }
+
   return (
     <main className="min-h-[70vh] bg-gx-surface px-4 py-16">
       <div className="mx-auto max-w-md rounded-gx-lg border border-gx-border bg-gx-background p-8 shadow-sm">
