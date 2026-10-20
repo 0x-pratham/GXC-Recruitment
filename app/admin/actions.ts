@@ -83,7 +83,9 @@ export async function saveRecruitmentSettings(formData: FormData) {
 
 export async function setRecruitmentOverride(formData: FormData) {
   const override = String(formData.get("override") ?? "");
-  if (!["schedule", "open", "closed"].includes(override)) redirect("/admin?settings_error=override");
+  if (override !== "schedule" && override !== "open" && override !== "closed") {
+    redirect("/admin?settings_error=override");
+  }
 
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
