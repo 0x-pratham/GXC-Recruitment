@@ -3,7 +3,8 @@ import { redirect } from "next/navigation";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
 import { RecruitmentForm } from "./_components/RecruitmentForm";
-import { RECRUITMENT_OPEN } from "@/lib/recruitment-config";
+import { getRecruitmentSettings, isRecruitmentOpen } from "@/lib/recruitment-settings";
+import { ClosedRecruitmentModal } from "./_components/ClosedRecruitmentModal";
 import { createClient } from "@/lib/supabase/server";
 
 export const metadata = {
@@ -80,14 +81,16 @@ function StatusCard({
 }
 
 export default async function ApplyPage() {
-  if (!RECRUITMENT_OPEN) {
+  const recruitmentSettings = await getRecruitmentSettings();
+  if (!isRecruitmentOpen(recruitmentSettings)) {
     return (
       <Section className="min-h-[calc(100vh-64px)] bg-gx-surface">
         <Container>
           <StatusCard
-            title="Applications are paused."
-            message="Recruitment is currently closed. Please check back for the next announcement."
+            title="Applications are currently closed."
+            message={recruitmentSettings.closed_message}
           />
+          <ClosedRecruitmentModal message={recruitmentSettings.closed_message} />
         </Container>
       </Section>
     );
@@ -165,7 +168,7 @@ export default async function ApplyPage() {
               Your GenXCode journey starts here.
             </h1>
             <p className="text-lg text-gx-ink/80">
-              Applications are open until further notice. Fill out the form below and our team will be in touch.
+              Applications are open now. Fill out the form below and our team will be in touch.
             </p>
             <p className="mt-4 text-sm text-gx-ink/55">
               Signed in with Google as{" "}
