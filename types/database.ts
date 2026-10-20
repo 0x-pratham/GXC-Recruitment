@@ -22,6 +22,36 @@ export type Database = {
         };
         Relationships: [];
       };
+      recruitment_settings: {
+        Row: {
+          id: number;
+          opens_at: string | null;
+          closes_at: string | null;
+          manual_override: "schedule" | "open" | "closed";
+          closed_message: string;
+          updated_at: string;
+          updated_by: string | null;
+        };
+        Insert: {
+          id?: number;
+          opens_at?: string | null;
+          closes_at?: string | null;
+          manual_override?: "schedule" | "open" | "closed";
+          closed_message?: string;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Update: {
+          id?: number;
+          opens_at?: string | null;
+          closes_at?: string | null;
+          manual_override?: "schedule" | "open" | "closed";
+          closed_message?: string;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Relationships: [];
+      };
       applications: {
         Row: {
           id: string;
