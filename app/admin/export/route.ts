@@ -22,14 +22,14 @@ export async function GET() {
   for (let start = 0; ; start += pageSize) {
     const { data, error } = await context.admin
       .from("applications")
-      .select(columns.join(","))
+      .select("*")
       .order("created_at", { ascending: true })
       .range(start, start + pageSize - 1);
     if (error) {
       console.error("CSV export failed:", error.message);
       return new NextResponse("Could not export applications", { status: 500 });
     }
-    allRows.push(...(data ?? []) as Record<string, unknown>[]);
+    allRows.push(...((data ?? []) as unknown as Record<string, unknown>[]));
     if (!data || data.length < pageSize) break;
   }
 
