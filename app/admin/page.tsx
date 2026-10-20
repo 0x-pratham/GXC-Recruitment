@@ -26,7 +26,10 @@ export default async function AdminDashboard({
     .select("id, created_at, first_name, last_name, email, phone, institution, year_of_study, track, portfolio_url, why_join, status")
     .order("created_at", { ascending: false });
 
-  const params = await searchParams;\n  const recruitmentSettings = await getRecruitmentSettings();\n  const formIsOpen = isRecruitmentOpen(recruitmentSettings);\n  const toDateTimeLocal = (value: string | null) => value ? new Intl.DateTimeFormat("sv-SE", { timeZone: "Asia/Kolkata", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", hourCycle: "h23" }).format(new Date(value)).replace(" ", "T") : "";
+  const params = await searchParams;
+  const recruitmentSettings = await getRecruitmentSettings();
+  const formIsOpen = isRecruitmentOpen(recruitmentSettings);
+  const toDateTimeLocal = (value: string | null) => value ? new Intl.DateTimeFormat("sv-SE", { timeZone: "Asia/Kolkata", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", hourCycle: "h23" }).format(new Date(value)).replace(" ", "T") : "";
 
   return (
     <main className="min-h-screen bg-gx-surface px-4 py-10 text-gx-ink sm:px-6 lg:px-10">
@@ -112,7 +115,8 @@ export default async function AdminDashboard({
           </div>
           <a href="/admin/export" className="inline-flex items-center gap-2 rounded-lg bg-gx-ink px-4 py-2.5 text-sm font-semibold text-white hover:opacity-90">↓ Download CSV</a>
         </section>
-\n        {!error && (
+
+        {!error && (
           <>
             <div className="mb-5 grid gap-3 sm:grid-cols-3">
               <div className="rounded-xl border border-gx-border bg-gx-background p-5">
