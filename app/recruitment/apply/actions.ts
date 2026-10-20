@@ -3,11 +3,12 @@
 
 import { createClient } from "@/lib/supabase/server";
 import { applicationSchema, type ApplicationFormValues } from "@/lib/validations/recruitment";
-import { RECRUITMENT_OPEN } from "@/lib/recruitment-config";
+import { getRecruitmentSettings, isRecruitmentOpen } from "@/lib/recruitment-settings";
 
 export async function submitApplication(data: ApplicationFormValues) {
-  if (!RECRUITMENT_OPEN) {
-    return { success: false, error: "Recruitment is currently closed. Please check back for the next announcement." };
+  const recruitmentSettings = await getRecruitmentSettings();
+  if (!isRecruitmentOpen(recruitmentSettings)) {
+    return { success: false, error: recruitmentSettings.closed_message };
   }
 
   try {
