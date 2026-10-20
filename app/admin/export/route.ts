@@ -4,7 +4,9 @@ import { getAdminClientIfAuthorized } from "@/lib/recruitment-settings";
 export const dynamic = "force-dynamic";
 
 function csvCell(value: unknown) {
-  const text = value == null ? "" : value instanceof Object ? JSON.stringify(value) : String(value);
+  let text = value == null ? "" : value instanceof Object ? JSON.stringify(value) : String(value);
+  // Prevent spreadsheet formula execution from applicant-controlled text.
+  if (/^[=+\-@\t\r]/.test(text)) text = `'${text}`;
   return `"${text.replace(/"/g, '""')}"`;
 }
 
